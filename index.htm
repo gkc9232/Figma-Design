@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bundle & Save</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f5f5f5;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 500px;
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .child-box h2 {
+            position: relative;
+            display: inline-block;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .child-box h2::before,
+        .child-box h2::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            width: 40px;
+            height: 2px;
+            background: black;
+        }
+
+        .child-box h2::before {
+            left: -50px;
+        }
+
+        .child-box h2::after {
+            right: -50px;
+        }
+
+        .main-box {
+            display: flex;
+            flex-direction: column;
+            background: #fff;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+            transition: 0.3s;
+            cursor: pointer;
+            border: 1px solid #ddd;
+        }
+
+        .main-box:hover {
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            border-color: #28a745;
+        }
+
+        .main-box.selected {
+            border-color: #28a745;
+            background-color: #f0fff4;
+        }
+
+        .bundle-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
+        .bundle-info input[type="radio"] {
+            margin-right: 10px;
+        }
+
+        .right-box {
+            font-weight: bold;
+            color: #28a745;
+        }
+
+        .options {
+            display: none;
+            margin-top: 10px;
+            text-align: left;
+        }
+
+        .main-box:hover .options,
+        .main-box.selected .options {
+            display: block;
+        }
+
+        .options label {
+            display: block;
+            margin: 5px 0;
+        }
+
+        .options select {
+            width: 100%;
+            padding: 5px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .btn-box button {
+            width: 100%;
+            padding: 10px;
+            background: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 20px;
+        }
+
+        .btn-box button:hover {
+            background: #218838;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="child-box">
+            <h2>Bundle & Save</h2>
+        </div>
+
+        <!-- Bundle 1 -->
+        <div class="main-box" onclick="selectBundle(this)">
+            <div class="bundle-info">
+                <div>
+                    <input type="radio" name="bundle" id="bundle1">
+                    <label for="bundle1">1 Pair - DKK 195.00</label>
+                </div>
+                <div class="right-box">
+                    <p>50% OFF</p>
+                </div>
+            </div>
+            <div class="options">
+                <label>Size:
+                    <select>
+                        <option>S</option>
+                        <option>M</option>
+                    </select>
+                </label>
+                <label>Color:
+                    <select>
+                        <option>Black</option>
+                        <option>White</option>
+                    </select>
+                </label>
+            </div>
+        </div>
+
+        <!-- Bundle 2 -->
+        <div class="main-box" onclick="selectBundle(this)">
+            <div class="bundle-info">
+                <div>
+                    <input type="radio" name="bundle" id="bundle2">
+                    <label for="bundle2">2 Pairs - DKK 345.00</label>
+                </div>
+                <div class="right-box">
+                    <p>55% OFF</p>
+                </div>
+            </div>
+            <div class="options">
+                <label>Size:
+                    <select>
+                        <option>S</option>
+                        <option>M</option>
+                    </select>
+                </label>
+                <label>Color:
+                    <select>
+                        <option>Black</option>
+                        <option>White</option>
+                    </select>
+                </label>
+            </div>
+        </div>
+
+        <!-- Bundle 3 -->
+        <div class="main-box" onclick="selectBundle(this)">
+            <div class="bundle-info">
+                <div>
+                    <input type="radio" name="bundle" id="bundle3">
+                    <label for="bundle3">3 Pairs - DKK 495.00</label>
+                </div>
+                <div class="right-box">
+                    <p>60% OFF</p>
+                </div>
+            </div>
+            <div class="options">
+                <label>Size:
+                    <select>
+                        <option>S</option>
+                        <option>M</option>
+                    </select>
+                </label>
+                <label>Color:
+                    <select>
+                        <option>Black</option>
+                        <option>White</option>
+                    </select>
+                </label>
+            </div>
+        </div>
+
+        <!-- Add to Cart Button -->
+        <div class="btn-box">
+            <button id="addToCart">+ Add To Cart</button>
+        </div>
+    </div>
+
+    <script>
+        // Function to handle bundle selection
+        function selectBundle(bundle) {
+            const allBundles = document.querySelectorAll('.main-box');
+            allBundles.forEach(b => b.classList.remove('selected'));
+            bundle.classList.add('selected');
+            bundle.querySelector('input[type="radio"]').checked = true;
+        }
+
+        // Add to Cart Button Logic
+        document.getElementById("addToCart").addEventListener("click", function () {
+            const selectedBundle = document.querySelector("input[name='bundle']:checked");
+            if (!selectedBundle) {
+                alert("Please select a bundle before adding to cart.");
+            } else {
+                alert("Bundle added to cart successfully!");
+            }
+        });
+    </script>
+</body>
+
+</html>
